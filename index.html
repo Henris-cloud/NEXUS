@@ -1,580 +1,65 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="theme-color" content="#10151d">
-<link rel="manifest" href="manifest.webmanifest">
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#10151d">
 <title>NEXUS — Communauté</title>
-
 <style>
-* {
-  box-sizing: border-box;
+:root{--bg:#0b0f14;--panel:#121821;--panel2:#18212c;--line:#293442;--text:#edf2f7;--muted:#8e9aaa;--blue:#4da3ff;--purple:#9b6cff;--green:#36d17d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,Helvetica,sans-serif}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}input{font-size:16px}
+.top{min-height:68px;height:auto;min-height:68px;position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:22px;padding:0 24px;background:#10151d;border-bottom:1px solid var(--line)}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}.logo span{color:var(--blue)}.search{width:min(520px,45vw);background:#0b1016;border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:white;outline:none}.search:focus{border-color:var(--blue)}.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}.bell{background:none;color:#cbd5e1;border:0;font-size:20px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--purple));color:white}
+.layout{width:100%;max-width:1380px;margin:auto;display:grid;grid-template-columns:230px minmax(0,760px) 270px;gap:24px;padding:24px 18px}.side{position:sticky;top:92px;height:max-content}.nav button{width:100%;text-align:left;background:none;color:var(--muted);border:0;padding:12px 14px;border-radius:9px;margin-bottom:5px}.nav button:hover,.nav button.active{background:var(--panel2);color:white}.cat{font-size:12px;text-transform:uppercase;color:#697586;margin:20px 14px 8px;letter-spacing:1px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:16px}.hero{background:linear-gradient(135deg,#12243b,#241a42)}h1{margin:0 0 9px;font-size:31px}.hero p{margin:0;color:#bdc9d8;line-height:1.55}.primary{margin-top:16px;background:var(--blue);color:#07111d;border:0;border-radius:9px;padding:10px 15px;font-weight:800}.primary:hover{filter:brightness(1.1)}h2{font-size:20px;margin:4px 0 14px}
+.post-head{display:flex;align-items:center;gap:11px}.who small{color:var(--muted)}.post p{line-height:1.55;color:#d4dbe4}.tag{display:inline-block;background:#102943;color:#68b5ff;padding:5px 9px;border-radius:20px;font-size:12px}.actions{display:flex;gap:7px;border-top:1px solid var(--line);margin-top:14px;padding-top:11px}.actions button{background:none;border:0;color:var(--muted);padding:7px 9px;border-radius:7px}.actions button:hover{background:var(--panel2);color:white}.actions .liked{color:#ff6b91}
+.trend{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}.trend:last-child{border:0}.trend span{color:var(--muted);font-size:13px}.challenge{background:#0c1118;border:1px solid var(--line);border-radius:10px;padding:13px;margin-top:11px}.challenge small{display:block;color:var(--muted);margin:6px 0}.points{color:#f0c75e}.full{width:100%}.empty{color:var(--muted);text-align:center;padding:30px}.hidden{display:none}footer{text-align:center;color:#647181;padding:18px 0 30px}
+@media(max-width:1050px){.layout{grid-template-columns:200px minmax(0,1fr);gap:16px}.right{display:none}}
+@media(max-width:700px){
+  .top{padding:10px 12px;gap:10px;flex-wrap:wrap}
+  .logo{font-size:22px}
+  .top-right b{display:none}
+  .search{display:block;order:3;width:100%;max-width:none}
+  .layout{display:block;padding:12px}
+  .left{display:block;position:static;overflow-x:auto;margin-bottom:12px}
+  .nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav button{width:auto;white-space:nowrap;margin:0;padding:10px 12px}
+  .cat{display:none}
+  .hero h1{font-size:25px}
+  .card{padding:15px;border-radius:11px}
+  .actions{flex-wrap:wrap}
+  .actions button{min-height:40px}
+  footer{padding-left:12px;padding-right:12px}
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f14;
-  color: #fff;
-}
-
-header {
-  padding: 20px;
-  background: #10151d;
-  border-bottom: 1px solid #26303c;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.bell {
-  border: 0;
-  background: transparent;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-.card {
-  background: #10151d;
-  border: 1px solid #26303c;
-  border-radius: 15px;
-  padding: 18px;
-  margin-bottom: 16px;
-}
-
-#nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  margin-bottom: 18px;
-}
-
-#nav button,
-.actions button,
-#newPost,
-#join {
-  border: 1px solid #303b49;
-  background: #151c25;
-  color: white;
-  border-radius: 10px;
-  padding: 10px 14px;
-  cursor: pointer;
-}
-
-#nav button.active {
-  background: #26364a;
-}
-
-#search {
-  width: 100%;
-  padding: 13px;
-  border-radius: 10px;
-  border: 1px solid #303b49;
-  background: #0b0f14;
-  color: white;
-  margin-bottom: 18px;
-}
-
-.post-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #26364a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.who small {
-  color: #9ba8b7;
-}
-
-.tag {
-  display: inline-block;
-  margin: 8px 0;
-  color: #8ebcff;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.actions button.liked {
-  background: #26364a;
-}
-
-.empty {
-  text-align: center;
-  color: #9ba8b7;
-  padding: 30px;
-}
-
-.hidden {
-  display: none;
-}
-
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.hero h1 {
-  margin-top: 0;
-}
-
-.hero p {
-  color: #aeb9c6;
-}
-
-@media (max-width: 600px) {
-  .hero {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-</style>
+@media(min-width:701px) and (max-width:1050px){.search{width:min(420px,42vw)}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0d1117"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="NEXUS"><link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
-
 <body>
-
-<header>
-  <div class="logo">NEXUS</div>
-  <button class="bell">🔔</button>
-</header>
-
-<main>
-
-  <section class="card hero">
-    <div>
-      <h1>NEXUS — Communauté</h1>
-      <p>Partage, discute, découvre et relève des défis.</p>
-    </div>
-
-    <button id="join">Rejoindre le défi</button>
-  </section>
-
-  <div id="nav">
-    <button class="active" data-view="Accueil">Accueil</button>
-    <button data-view="Discussions générales">Discussions</button>
-    <button data-view="Jeux vidéo">Jeux vidéo</button>
-    <button data-view="Défis">Défis</button>
-  </div>
-
-  <input
-    id="search"
-    type="search"
-    placeholder="Rechercher une publication..."
-  >
-
-  <div style="margin-bottom:18px;">
-    <button id="newPost">➕ Nouvelle publication</button>
-  </div>
-
-  <h2 id="title">Publications de la communauté</h2>
-
-  <section id="feed">
-
-    <article class="card post" data-cat="Jeux vidéo">
-
-      <div class="post-head">
-        <div class="avatar">N</div>
-
-        <div class="who">
-          <b>NexusUser</b><br>
-          <small>à l'instant · Jeux vidéo</small>
-        </div>
-      </div>
-
-      <p>
-        Bienvenue sur NEXUS ! 🎮
-      </p>
-
-      <span class="tag">#Jeux vidéo</span>
-
-      <div class="actions">
-        <button class="like">
-          ❤️ J’aime <span>0</span>
-        </button>
-
-        <button class="comment">
-          💬 Commenter
-        </button>
-
-        <button class="share">
-          ↗ Partager
-        </button>
-      </div>
-
-    </article>
-
-
-    <article class="card post" data-cat="Défis">
-
-      <div class="post-head">
-        <div class="avatar">N</div>
-
-        <div class="who">
-          <b>NexusUser</b><br>
-          <small>à l'instant · Défis</small>
-        </div>
-      </div>
-
-      <p>
-        Quel défi allez-vous relever aujourd’hui ? ⭐
-      </p>
-
-      <span class="tag">#Défis</span>
-
-      <div class="actions">
-        <button class="like">
-          ❤️ J’aime <span>0</span>
-        </button>
-
-        <button class="comment">
-          💬 Commenter
-        </button>
-
-        <button class="share">
-          ↗ Partager
-        </button>
-      </div>
-
-    </article>
-
-  </section>
-
-  <div id="empty" class="empty hidden">
-    Aucune publication trouvée.
-  </div>
-
+<header class="top"><div class="logo">NE<span>X</span>US</div><input id="search" class="search" placeholder="Rechercher dans NEXUS…"><div class="top-right"><button class="bell" title="Notifications">🔔</button><div class="avatar">N</div><b>NexusUser</b></div></header>
+<div class="layout">
+<aside class="side left"><div class="nav" id="nav">
+<button class="active" data-view="Accueil">🏠 Accueil</button>
+<div class="cat">Communauté</div>
+<button data-view="Gaming">🎮 Gaming</button><button data-view="Technologie">💻 Technologie</button><button data-view="Créations">🎨 Créations</button><button data-view="Musique">🎵 Musique</button><button data-view="Films & séries">🎬 Films & séries</button><button data-view="Fun & memes">😂 Fun & memes</button><button data-view="Discussions générales">💡 Discussions générales</button><button data-view="Défis & compétitions">🏆 Défis & compétitions</button>
+</div></aside>
+<main id="main">
+<section class="card hero"><h1>Bienvenue sur NEXUS 👋</h1><p>Une communauté pour partager, discuter, découvrir et relever des défis.</p><button class="primary" id="newPost">＋ Créer une publication</button></section>
+<h2 id="title">Publications de la communauté</h2>
+<div id="feed">
+<article class="card post" data-cat="Gaming"><div class="post-head"><div class="avatar">K</div><div class="who"><b>Kyro</b><br><small>il y a 12 min · Gaming</small></div></div><p>Quel jeu vous a le plus marqué récemment ? 🎮 Je cherche quelque chose de nouveau à découvrir.</p><span class="tag">#Gaming</span><div class="actions"><button class="like">❤️ J'aime <span>24</span></button><button class="comment">💬 Commenter</button><button>↗ Partager</button></div></article>
+<article class="card post" data-cat="Créations"><div class="post-head"><div class="avatar">M</div><div class="who"><b>Mika</b><br><small>il y a 38 min · Créations</small></div></div><p>Je viens de terminer mon nouveau dessin ! Vous en pensez quoi ? 🎨</p><span class="tag">#Créations</span><div class="actions"><button class="like">❤️ J'aime <span>41</span></button><button class="comment">💬 Commenter</button><button>↗ Partager</button></div></article>
+<article class="card post" data-cat="Technologie"><div class="post-head"><div class="avatar">R</div><div class="who"><b>Rayan</b><br><small>il y a 1 h · Technologie</small></div></div><p>Quelqu'un a testé une nouvelle distribution Linux récemment ? 💻</p><span class="tag">#Technologie</span><div class="actions"><button class="like">❤️ J'aime <span>17</span></button><button class="comment">💬 Commenter</button><button>↗ Partager</button></div></article>
+</div><div id="empty" class="empty hidden">Aucune publication trouvée.</div>
 </main>
-
+<aside class="side right"><section class="card"><h3>🔥 Tendances</h3><div class="trend"><b>#Gaming</b><span>2,4 k</span></div><div class="trend"><b>#Créations</b><span>1,8 k</span></div><div class="trend"><b>#Technologie</b><span>1,2 k</span></div><div class="trend"><b>#Musique</b><span>940</span></div></section><section class="card"><h3>🏆 Défi de la semaine</h3><div class="challenge"><b>« Montre ta créativité »</b><small>Publie une création originale.</small><div class="points">+100 points ⭐</div></div><button class="primary full" id="join">Participer</button></section></aside>
+</div><footer>NEXUS · Partager · Découvrir · Participer</footer>
 <script>
-(function () {
-
-  "use strict";
-
-  function setupPost(post) {
-
-    var like = post.querySelector(".like");
-    var comment = post.querySelector(".comment");
-    var share = post.querySelector(".share");
-
-    if (like) {
-      like.addEventListener("click", function () {
-
-        var count = like.querySelector("span");
-
-        var value =
-          parseInt(count.textContent, 10) || 0;
-
-        if (like.classList.contains("liked")) {
-
-          value = Math.max(0, value - 1);
-
-          like.classList.remove("liked");
-
-        } else {
-
-          value = value + 1;
-
-          like.classList.add("liked");
-        }
-
-        count.textContent = String(value);
-      });
-    }
-
-
-    if (comment) {
-
-      comment.addEventListener("click", function () {
-
-        var text =
-          window.prompt("Écris ton commentaire :");
-
-        if (text && text.trim()) {
-
-          window.alert("Commentaire ajouté !");
-        }
-      });
-    }
-
-
-    if (share) {
-
-      share.addEventListener("click", function () {
-
-        var url = window.location.href;
-
-        if (
-          navigator.clipboard &&
-          window.isSecureContext
-        ) {
-
-          navigator.clipboard
-            .writeText(url)
-            .then(function () {
-
-              window.alert("Lien copié !");
-
-            })
-            .catch(function () {
-
-              window.prompt(
-                "Copie ce lien :",
-                url
-              );
-
-            });
-
-        } else {
-
-          window.prompt(
-            "Copie ce lien :",
-            url
-          );
-        }
-      });
-    }
-  }
-
-
-  document
-    .querySelectorAll(".post")
-    .forEach(function (post) {
-
-      setupPost(post);
-
-    });
-
-
-  document
-    .querySelectorAll("#nav button")
-    .forEach(function (button) {
-
-      button.addEventListener(
-        "click",
-        function () {
-
-          document
-            .querySelectorAll("#nav button")
-            .forEach(function (item) {
-
-              item.classList.remove("active");
-
-            });
-
-          button.classList.add("active");
-
-          var category =
-            button.getAttribute("data-view");
-
-          if (category === "Accueil") {
-
-            document.getElementById("title")
-              .textContent =
-              "Publications de la communauté";
-
-          } else {
-
-            document.getElementById("title")
-              .textContent =
-              category;
-          }
-
-          var visible = 0;
-
-          document
-            .querySelectorAll(".post")
-            .forEach(function (post) {
-
-              var show =
-                category === "Accueil" ||
-                post.getAttribute("data-cat") === category;
-
-              post.style.display =
-                show ? "" : "none";
-
-              if (show) {
-                visible++;
-              }
-            });
-
-          document
-            .getElementById("empty")
-            .classList.toggle(
-              "hidden",
-              visible !== 0
-            );
-        }
-      );
-    });
-
-
-  document
-    .getElementById("search")
-    .addEventListener(
-      "input",
-      function (event) {
-
-        var query =
-          event.target.value
-            .toLowerCase()
-            .trim();
-
-        var visible = 0;
-
-        document
-          .querySelectorAll(".post")
-          .forEach(function (post) {
-
-            var show =
-              post.textContent
-                .toLowerCase()
-                .indexOf(query) !== -1;
-
-            post.style.display =
-              show ? "" : "none";
-
-            if (show) {
-              visible++;
-            }
-          });
-
-        document
-          .getElementById("empty")
-          .classList.toggle(
-            "hidden",
-            visible !== 0
-          );
-      }
-    );
-
-
-  document
-    .getElementById("newPost")
-    .addEventListener(
-      "click",
-      function () {
-
-        var text =
-          window.prompt(
-            "Que veux-tu publier ?"
-          );
-
-        if (!text || !text.trim()) {
-          return;
-        }
-
-        var post =
-          document.createElement("article");
-
-        post.className = "card post";
-
-        post.setAttribute(
-          "data-cat",
-          "Discussions générales"
-        );
-
-        post.innerHTML =
-          '<div class="post-head">' +
-            '<div class="avatar">N</div>' +
-            '<div class="who">' +
-              '<b>NexusUser</b><br>' +
-              '<small>à l’instant · Discussions générales</small>' +
-            '</div>' +
-          '</div>' +
-          '<p></p>' +
-          '<span class="tag">#Discussions générales</span>' +
-          '<div class="actions">' +
-            '<button class="like">❤️ J’aime <span>0</span></button>' +
-            '<button class="comment">💬 Commenter</button>' +
-            '<button class="share">↗ Partager</button>' +
-          '</div>';
-
-        post
-          .querySelector("p")
-          .textContent = text.trim();
-
-        document
-          .getElementById("feed")
-          .prepend(post);
-
-        setupPost(post);
-      }
-    );
-
-
-  document
-    .getElementById("join")
-    .addEventListener(
-      "click",
-      function () {
-
-        window.alert(
-          "Défi rejoint ! +100 points ⭐"
-        );
-      }
-    );
-
-
-  document
-    .querySelector(".bell")
-    .addEventListener(
-      "click",
-      function () {
-
-        window.alert(
-          "Aucune nouvelle notification 🔔"
-        );
-      }
-    );
-
-
-  if ("serviceWorker" in navigator) {
-
-    window.addEventListener(
-      "load",
-      function () {
-
-        navigator.serviceWorker
-          .register("./sw.js")
-          .catch(function () {});
-
-      }
-    );
-  }
-
-})();
-</script>
-
-</body>
-</html>
+const posts=[...document.querySelectorAll('.post')];
+document.querySelectorAll('.like').forEach(b=>b.onclick=()=>{const s=b.querySelector('span');s.textContent=+s.textContent+1;b.classList.add('liked')});
+document.querySelectorAll('.comment').forEach(b=>b.onclick=()=>alert('Les commentaires seront ajoutés dans la prochaine version.'));
+document.getElementById('join').onclick=()=>alert('Défi rejoint ! +100 points ⭐');
+document.getElementById('newPost').onclick=()=>{const text=prompt('Que veux-tu publier ?');if(!text?.trim())return;const a=document.createElement('article');a.className='card post';a.dataset.cat='Discussions générales';a.innerHTML='<div class="post-head"><div class="avatar">N</div><div class="who"><b>NexusUser</b><br><small>à l’instant · Discussions générales</small></div></div><p></p><span class="tag">#Discussions générales</span><div class="actions"><button class="like">❤️ J’aime <span>0</span></button><button class="comment">💬 Commenter</button><button>↗ Partager</button></div>';a.querySelector('p').textContent=text;document.getElementById('feed').prepend(a);a.querySelector('.like').onclick=()=>{const s=a.querySelector('.like span');s.textContent=+s.textContent+1;a.querySelector('.like').classList.add('liked')};a.querySelector('.comment').onclick=()=>alert('Les commentaires seront ajoutés dans la prochaine version.');});
+document.querySelectorAll('#nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const cat=btn.dataset.view;document.getElementById('title').textContent=cat==='Accueil'?'Publications de la communauté':cat;document.querySelectorAll('.post').forEach(p=>p.style.display=cat==='Accueil'||p.dataset.cat===cat?'block':'none');document.getElementById('empty').classList.toggle('hidden',[...document.querySelectorAll('.post')].some(p=>p.style.display!=='none'));});
+document.getElementById('search').oninput=e=>{const q=e.target.value.toLowerCase();let n=0;document.querySelectorAll('.post').forEach(p=>{const ok=p.textContent.toLowerCase().includes(q);p.style.display=ok?'block':'none';if(ok)n++});document.getElementById('empty').classList.toggle('hidden',n>0)};
+</script><script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
+</body></html>
